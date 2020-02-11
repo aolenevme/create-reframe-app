@@ -5,4 +5,4 @@ target/
 package-lock.json
 package.json
 shadow-cljs.edn
-
+.DS_Store
