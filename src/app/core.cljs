@@ -11,16 +11,12 @@
 
 
 ;; -- Debugging aids ----------------------------------------------------------
-(devtools/install!)       ;; we love https://github.com/binaryage/cljs-devtools
+(devtools/install!)       ;; CLJS Devtools: https://github.com/binaryage/cljs-devtools
 (enable-console-print!)   ;; so that println writes to `console.log`
 
 
 ;; -- Routes and History ------------------------------------------------------
-;; Although we use the secretary library below, that's mostly a historical
-;; accident. You might also consider using:
-;;   - https://github.com/DomKM/silk
-;;   - https://github.com/juxt/bidi
-;; We don't have a strong opinion.
+;; Link to the repo: https://github.com/clj-commons/secretary is used
 ;;
 (defroute "/" [] (println "Hello World!"))
 
@@ -36,7 +32,7 @@
 (defn render
   []
   ;; Render the UI into the HTML's <div id="app" /> element
-  ;; The view function `todomvc.views/todo-app` is the
+  ;; The view function `app.views/hello-world` is the
   ;; root view for the entire UI.
   (reagent/render [app.views/hello-world]
                   (.getElementById js/document "app")))
