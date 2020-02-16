@@ -1,33 +1,62 @@
-(defproject create-reframe-app "0.0.1"
-  
+(defproject my-website "0.1.0-SNAPSHOT"
   :dependencies [[org.clojure/clojure "1.10.1"]
-                 [org.clojure/clojurescript  "1.10.597"
-                  :exclusions [com.google.javascript/closure-compiler-unshaded         
-                               org.clojure/google-closure-library             
+                 [org.clojure/clojurescript "1.10.597"
+                  :exclusions [com.google.javascript/closure-compiler-unshaded
+                               org.clojure/google-closure-library
                                org.clojure/google-closure-library-third-party]]
-                 [thheller/shadow-cljs       "2.8.83"]
+                 [thheller/shadow-cljs "2.8.83"]
                  [reagent "0.9.1"]
-                 [re-frame "RELEASE"]
-                 [binaryage/devtools "1.0.0"]
-                 [clj-commons/secretary "1.2.4"]
-                 [day8.re-frame/tracing "0.5.3"]]
-  
-    :plugins     [[lein-shadow "0.1.7"]]
-  
-    :clean-targets ^{:protect false} [:target-path 
-                                      "shadow-cljs.edn" 
-                                      "package.json" 
-                                      "package-lock.json"
-                                      "resources/public/js"]
-  :shadow-cljs {:nrepl {:port 8777}
-                
-                :builds {:client {:target :browser
-                                  :output-dir "resources/public/js"
-                                  :modules {:client {:init-fn app.core/main!}}
-                                  :devtools {:http-root "resources/public"
-                                             :http-port 8280}}}}
-  :aliases {"dev-auto" ["shadow" "watch" "client"]})
-                                                                               
-                 
-                 
-                 
+                 [re-frame "0.11.0"]
+                 [bidi "2.1.6"]
+                 [kibu/pushy "0.3.8"]
+                 [garden "1.3.9"]
+                 [ns-tracker "0.4.0"]]
+
+  :plugins [[lein-garden "0.3.0"]
+            [lein-shell "0.5.0"]
+            [lein-cljfmt "0.6.6"]]
+
+  :min-lein-version "2.5.3"
+
+  :jvm-opts ["-Xmx1G"]
+
+  :source-paths ["src/clj" "src/cljs"]
+
+  :test-paths   ["test/cljs"]
+
+  :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"
+                                    "test/js"
+                                    "resources/public/css"]
+
+
+  :garden {:builds [{:id           "screen"
+                     :source-paths ["src/clj"]
+                     :stylesheet   my-website.css/screen
+                     :compiler     {:output-to     "resources/public/css/screen.css"
+                                    :pretty-print? true}}]}
+
+  :shell {:commands {"open" {:windows ["cmd" "/c" "start"]
+                             :macosx  "open"
+                             :linux   "xdg-open"}}}
+
+  :aliases {"dev"          ["with-profile" "dev" "do"
+                            ["run" "-m" "shadow.cljs.devtools.cli" "watch" "app"]]
+            "prod"         ["with-profile" "prod" "do"
+                            ["run" "-m" "shadow.cljs.devtools.cli" "release" "app"]]
+            "build-report" ["with-profile" "prod" "do"
+                            ["run" "-m" "shadow.cljs.devtools.cli" "run" "shadow.cljs.build-report" "app" "target/build-report.html"]
+                            ["shell" "open" "target/build-report.html"]]
+            "karma"        ["with-profile" "prod" "do"
+                            ["run" "-m" "shadow.cljs.devtools.cli" "compile" "karma-test"]
+                            ["shell" "karma" "start" "--single-run" "--reporters" "junit,dots"]]}
+
+  :profiles
+  {:dev
+   {:dependencies [[binaryage/devtools "1.0.0"]
+                   [day8.re-frame/re-frame-10x "0.5.1"]
+                   [day8.re-frame/tracing "0.5.3"]]
+    :source-paths ["dev"]}
+
+   :prod { :dependencies [[day8.re-frame/tracing-stubs "0.5.3"]]}}
+
+  :prep-tasks [["garden" "once"]])

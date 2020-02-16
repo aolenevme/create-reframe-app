@@ -1,8 +1,21 @@
-resources/
-node_modules/
-target/
-.shadow-cljs/
-package-lock.json
-package.json
-shadow-cljs.edn
-.DS_Store
+/out/
+/resources/public/js/compiled/
+/target/
+/*-init.clj
+/*.log
+
+# Leiningen
+/.lein-*
+/.nrepl-port
+
+# Node.js dependencies
+/node_modules/
+
+# shadow-cljs cache, port files
+/.shadow-cljs/
+
+# clj-kondo cache
+/.clj-kondo/.cache
+
+/.idea
+/lsp
