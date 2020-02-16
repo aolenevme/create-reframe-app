@@ -14,6 +14,6 @@ I am using the config consisting of:
 * Testing: [Cljs.test](https://github.com/clojure/clojurescript/blob/master/src/main/cljs/cljs/test.cljs)
 * Routing: [Bidi](https://github.com/juxt/bidi) with [Pushy](https://github.com/kibu-australia/pushy)
 
-## Several words on dev environment
+## Several words on my dev environment
 I use [IntelliJ IDEA](https://www.jetbrains.com/idea/) with [ClojureKit plugin](https://plugins.jetbrains.com/plugin/8636-clojure-kit).
 It is a smooth setup with an opportunity to integrate [Clj-kondo](https://github.com/borkdude/clj-kondo) (read its Github docs) via [LSP Server Plugin](https://plugins.jetbrains.com/plugin/10209-lsp-support).
