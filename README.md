@@ -5,7 +5,7 @@ My initial template for the [Re-frame](https://github.com/day8/re-frame) web app
 This template is mainly based on the following well-known repo: [re-frame-template](https://github.com/day8/re-frame-template).
 Follow it at first and only then compare your configured repo with mine 🤝.
 
-I am using the config of:
+I am using the config consisting of:
 * Styling: [Garden](https://github.com/noprompt/garden)
 * Devtools: [Re-frame-10x](https://github.com/day8/re-frame-10x)
 * REPL: [Cider](https://github.com/clojure-emacs/cider)
